@@ -1,0 +1,31 @@
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+def flip_binary_tree(root):
+    if not root:
+        return None
+
+    if not root.left and not root.right:
+        return root
+
+    flipped_left = flip_binary_tree(root.left)
+    flipped_right = flip_binary_tree(root.right)
+
+    root.left = None
+    root.right = None
+
+    if flipped_left:
+        root.left = flipped_left
+        root.right = flipped_left.right
+
+    if flipped_right:
+        flipped_left.right = flipped_right
+
+    return root
+
+# Example usage:
+# Assuming you have the binary tree root node
+# flipped_root = flip_binary_tree(root)

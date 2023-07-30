@@ -1,0 +1,38 @@
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+def binary_tree_to_dll(root):
+    def inorder_traversal(node):
+        nonlocal prev, head
+
+        if not node:
+            return
+
+        # Recursively convert left subtree
+        inorder_traversal(node.left)
+
+        # Process current node
+        if prev:
+            prev.right = node
+            node.left = prev
+        else:
+            # First node encountered (leftmost node in inorder traversal)
+            head = node
+
+        prev = node
+
+        # Recursively convert right subtree
+        inorder_traversal(node.right)
+
+    head = None  # head of the DLL
+    prev = None  # previously visited node
+    inorder_traversal(root)
+
+    return head
+
+# Example usage:
+# Assuming you have the binary tree root node
+# converted_list_head = binary_tree_to_dll(root)
